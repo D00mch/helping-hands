@@ -2,7 +2,7 @@
   (:gen-class)
   (:require [io.pedestal.http :as server]
             [io.pedestal.http.route :as route]
-            #_[mount.core :as mount]
+            [mount.core :as mount]
             [helping-hands.consumer.config :as cfg]
             [helping-hands.server :refer [build-run-dev]]
             [helping-hands.consumer.service :as service]))
@@ -14,8 +14,8 @@
   [& args]
   (prn "\nCreating your [DEV] server...")
   (cfg/init-config {:cli-args args :quit-on-error true})
-  ;; TODO: (mount/start)
-  ;; (.addShutdownHook (Runtime/getRuntime) (Thread. mount/stop))
+  (mount/start)
+  (.addShutdownHook (Runtime/getRuntime) (Thread. mount/stop))
   (build-run-dev service/service
                  #(route/expand-routes (deref #'service/routes))))
 
@@ -24,4 +24,6 @@
   [& args]
   (println "\nCreating your server...")
   (cfg/init-config {:cli-args args :quit-on-error true})
+  (mount/start)
+  (.addShutdownHook (Runtime/getRuntime) (Thread. mount/stop))
   (server/start runnable-service))

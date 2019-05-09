@@ -2,7 +2,7 @@
   "Defines Configuration for the Service"
   (:require [omniconf.core :as cfg]))
 
-(defn init-config [{:keys [cli-args quit-on-error] :as params
+(defn init-config [{:keys [cli-args quit-on-error]
                     :or   {cli-args [], quit-on-error true}}]
   ;; define the configuration
   (cfg/define
@@ -12,7 +12,7 @@
                :description "MECBOT configuration file"}
      :datomic {:nested
                {:uri {:type        :string
-                      :default     "datomic:mem//consumer"
+                      :default     "datomic:mem://consumer"
                       :description "Datomic URI for Consumer DB"}}}})
   (cfg/populate-from-env quit-on-error)
   ;; load properties to pick -Dconf for the config file (set up in project.clj)
@@ -24,3 +24,4 @@
   (cfg/populate-from-cmd cli-args quit-on-error)
   (cfg/verify :quit-on-error quit-on-error))
 
+(defn get-config [& args] (apply cfg/get args))

@@ -1,12 +1,14 @@
 (ns helping-hands.consumer.persistence
   "Persistence Port and Adapter for Consumer Service"
-  (:require [datomic.api :as d]))
+  (:require [datomic.api :as d]
+            [helping-hands.consumer.config :as cfg]))
 
 ;; Consumer Persistence Port for Adapters to Plug-in
 (defprotocol ConsumerDB
   (upsert [this id name address mobile email geo])
   (entity [this id flds])
-  (delete [this id]))
+  (delete [this id])
+  (close  [this]))
 
 
 ;; Datomic Adapter Impl for Consumer Port
@@ -41,14 +43,16 @@
         (select-keys consumer (map keyword flds)))))
   (delete [this id]
     (when-let [eid (get-entity-id conn id)]
-      (d/transact conn [[:db.fn/retractEntity eid]]))))
+      (d/transact conn [[:db.fn/retractEntity eid]])))
+  (close  [this]
+    (d/shutdown true)))
 
 
 (defn create-consumer-database
   "Creates a consumer database and returns the connection"
-  [d]
+  []
   ;; create and connect to the db
-  (let [dburi (str "datomic:mem://" d)
+  (let [dburi (cfg/get-config [:datomic :uri])
         db    (d/create-database dburi)
         conn  (d/connect dburi)]
     ;; transact schema if database was created

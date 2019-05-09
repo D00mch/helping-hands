@@ -10,6 +10,7 @@
                  [com.datomic/datomic-free "0.9.5697"]
 
                  [com.grammarly/omniconf "0.3.2"]
+                 [mount "0.1.16"]
 
                  [ch.qos.logback/logback-classic "1.2.3" :exclusions [org.slf4j/slf4j-api]]
 
@@ -41,5 +42,5 @@
              :debug {:jvm-opts
                      ["-server" (str "-agentlib:jdwp=transport=dt_socket,"
                                      "server=y,address=8000,suspend=n")]}}
-  :main ^{:skip-aot true} helping-hands.server)
+  :main ^{:skip-aot true} helping-hands.consumer.server)
 
