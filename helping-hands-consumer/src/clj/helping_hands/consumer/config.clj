@@ -1,5 +1,4 @@
 (ns helping-hands.consumer.config
-  "Defines Configuration for the Service"
   (:require [omniconf.core :as cfg]))
 
 (defn init-config [{:keys [cli-args quit-on-error]

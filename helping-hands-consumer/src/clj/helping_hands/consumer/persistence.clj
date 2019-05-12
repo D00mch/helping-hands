@@ -47,7 +47,6 @@
   (close  [this]
     (d/shutdown true)))
 
-
 (defn create-consumer-database
   "Creates a consumer database and returns the connection"
   []
@@ -92,3 +91,4 @@
                     :db/doc         "Latitude,Longitude CSV"
                     :db/index       false}]))
     (ConsumerDBDatomic. conn)))
+

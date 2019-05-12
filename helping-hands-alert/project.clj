@@ -10,10 +10,13 @@
                  [com.datomic/datomic-free "0.9.5697"]
 
                  [com.grammarly/omniconf "0.3.2"]
+                 [mount "0.1.16"]
 
+                 [org.clojure/tools.logging "0.4.1"]
                  [ch.qos.logback/logback-classic "1.2.3" :exclusions [org.slf4j/slf4j-api]]
 
                  [com.draines/postal "2.0.3"]
+                 [org.apache.kafka/kafka-clients "2.2.0"]
 
                  [org.slf4j/jul-to-slf4j "1.7.25"]
                  [org.slf4j/jcl-over-slf4j "1.7.25"]
@@ -41,5 +44,5 @@
              :debug {:jvm-opts
                      ["-server" (str "-agentlib:jdwp=transport=dt_socket,"
                                      "server=y,address=8000,suspend=n")]}}
-  :main ^{:skip-aot true} helping-hands.server)
+  :main ^{:skip-aot true} helping-hands.alert.server)
 

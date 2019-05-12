@@ -3,12 +3,16 @@
   (:require [cheshire.core :as jp]
             [clojure.string :as s]
             [postal.core :as postal]
-            [io.pedestal.interceptor.chain :as chain]
-            [helping-hands.service :refer [handle-500]])
+            [io.pedestal.interceptor.chain :as chain])
   (:import [java.io IOException]
            [java.util UUID]))
 
 ;; common
+(def  handle-500
+  (fn [context ex-ifo]
+    (assoc context :response {:status 500
+                              :body (.getMessage ex-info)})))
+
 (defn- terminate-400
   [context msg]
   (chain/terminate

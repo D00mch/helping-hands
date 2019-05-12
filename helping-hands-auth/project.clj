@@ -10,10 +10,15 @@
                  [com.datomic/datomic-free "0.9.5697"]
 
                  [com.grammarly/omniconf "0.3.2"]
+                 [mount "0.1.16"]
+
+                 [com.nimbusds/nimbus-jose-jwt "5.4"]
+                 [agynamix/permissions "0.2.2-SNAPSHOT"]
 
                  [ch.qos.logback/logback-classic "1.2.3" :exclusions [org.slf4j/slf4j-api]]
 
                  [com.draines/postal "2.0.3"]
+                 [org.apache.kafka/kafka-clients "2.2.0"]
 
                  [org.slf4j/jul-to-slf4j "1.7.25"]
                  [org.slf4j/jcl-over-slf4j "1.7.25"]
@@ -29,17 +34,18 @@
             ]
   :codox {:namespace :all}
   :test2junit-output-dir "target/test-reports"
-  :profiles {:dev {:aliases {"run-dev" ["trampoline" "run" "-m" "helping-hands.provider.server/run-dev"]}
+  :profiles {:dev {:aliases {"run-dev" ["trampoline" "run" "-m" "helping-hands.auth.server/run-dev"]}
                    :dependencies [[io.pedestal/pedestal.service-tools "0.5.5"]]
                    :resource-paths ["config", "resources"]
                    :jvm-opts ["-Dconf=config/conf.edn"]
                    }
-             :uberjar {:aot [helping-hands.server]}
+             :uberjar {:aot [helping-hands.auth.server]}
              :doc {:dependencies [[codox-theme-rdash "0.1.2"]]
                    :codox {:metadata {:doc/format :markdown}
                            :themes [:rdash]}}
              :debug {:jvm-opts
                      ["-server" (str "-agentlib:jdwp=transport=dt_socket,"
                                      "server=y,address=8000,suspend=n")]}}
-  :main ^{:skip-aot true} helping-hands.provider.server)
+  :main ^{:skip-aot true} helping-hands.auth.server)
+
 

@@ -86,7 +86,7 @@
   [context]
   (let [params (merge-params context)
         ctx    (validate-rating-cost-ts context)
-        params (if (not (nil? ctx))
+        params (when (not (nil? ctx))
                  (assoc params
                         :rating (-> ctx :request :form-params :rating)
                         :cost   (-> ctx :request :form-params :cost)
